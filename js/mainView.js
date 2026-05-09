@@ -1,4 +1,4 @@
-import { getRecords, deleteRecord } from "./db.js";
+import { getRecords, deleteRecord, updateRecord } from "./db.js"; // updateRecord追加
 
 const doArr = {
   1: "インターン",
@@ -30,17 +30,35 @@ export const loadRecords = async (uid) => {
   recs.forEach((rec) => {
     const tr = document.createElement("tr");
     tr.innerHTML = `
-    <td>${rec.date}</td>
-    <td>${rec.dayNum}</td>
-    <td>${rec.company}</td>
-    <td>${rec.place}</td>
-    <td>${doArr[rec.doing]}</td>
-    <td>${rec.test ? testArr[rec.test] : "none"}</td>
-    <td>${rec.doingOther ? rec.doingOther : "none"}</td>
-    <td>${rec.testOther ? rec.testOther : "none"}</td>
-    <td><button class="deleteBtn" data-id="${rec.id}">削除</button></td>
-  `;
+      <td>${rec.date}</td>
+      <td>${rec.dayNum}</td>
+      <td>${rec.company}</td>
+      <td>${rec.place}</td>
+      <td>${doArr[rec.doing]}</td>
+      <td>${rec.test ? testArr[rec.test] : "none"}</td>
+      <td>${rec.doingOther ? rec.doingOther : "none"}</td>
+      <td>${rec.testOther ? rec.testOther : "none"}</td>
+      <td class="schoolDoc" data-id="${rec.id}" data-status="${rec.schoolDoc ?? false}">
+        ${rec.schoolDoc ? "済" : "未"}
+      </td>
+      <td><button class="deleteBtn" data-id="${rec.id}">削除</button></td>
+    `;
     tbody.appendChild(tr);
+  });
+
+  // 学校書類セルのクリックで未/済を切り替え
+  document.querySelectorAll(".schoolDoc").forEach((td) => {
+    td.addEventListener("click", async () => {
+      const id = td.dataset.id;
+      const current = td.dataset.status === "true"; // 現在の状態をbooleanに変換
+      const next = !current; // 反転
+
+      await updateRecord(id, { schoolDoc: next }); // Firestoreを更新
+
+      // 画面上も即時反映
+      td.dataset.status = next;
+      td.textContent = next ? "済" : "未";
+    });
   });
 
   // 削除ボタンのイベント

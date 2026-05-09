@@ -4,6 +4,7 @@ import {
   addDoc,
   getDocs,
   deleteDoc,
+  updateDoc, // 追加：フィールド更新用
   doc,
   query,
   where,
@@ -25,7 +26,12 @@ export const getRecords = async (colName, uid) => {
   }));
 };
 
-//データを削除（１行ずつ）
+// データを削除（１行ずつ）
 export const deleteRecord = async (id) => {
   await deleteDoc(doc(db, "records", id));
+};
+
+// データ更新（指定フィールドのみ）
+export const updateRecord = async (id, data) => {
+  await updateDoc(doc(db, "records", id), data);
 };

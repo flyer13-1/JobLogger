@@ -32,6 +32,7 @@ document.getElementById("loginGithub").addEventListener("click", async () => {
     await signInWithPopup(auth, provider);
     window.location.href = "./main.html";
   } catch (e) {
+    console.error(e);
     alert("ログインに失敗");
   }
 });
