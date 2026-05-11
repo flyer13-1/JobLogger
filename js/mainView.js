@@ -38,36 +38,40 @@ export const loadRecords = async (uid) => {
       <td>${rec.test ? testArr[rec.test] : "none"}</td>
       <td>${rec.doingOther ? rec.doingOther : "none"}</td>
       <td>${rec.testOther ? rec.testOther : "none"}</td>
-      <td class="schoolDoc" data-id="${rec.id}" data-status="${rec.schoolDoc ?? false}">
-        ${rec.schoolDoc ? "済" : "未"}
-      </td>
+      <td>
+        <button class="schoolDocBtn" data-id="${rec.id}" data-status="${rec.schoolDoc ?? false}">
+          ${rec.schoolDoc ? "済" : "未"}
+        </button>
+      </td> 
       <td><button class="deleteBtn" data-id="${rec.id}">削除</button></td>
     `;
     tbody.appendChild(tr);
   });
 
   // 学校書類セルのクリックで未/済を切り替え
-  document.querySelectorAll(".schoolDoc").forEach((td) => {
-    td.addEventListener("click", async () => {
-      const id = td.dataset.id;
-      const current = td.dataset.status === "true"; // 現在の状態をbooleanに変換
-      const next = !current; // 反転
+  document.querySelectorAll(".schoolDocBtn").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      if (!window.confirm("済/未を切り替えますか？")) return;
 
-      await updateRecord(id, { schoolDoc: next }); // Firestoreを更新
+      const id = btn.dataset.id;
+      const current = btn.dataset.status === "true";
+      const next = !current;
 
-      // 画面上も即時反映
-      td.dataset.status = next;
-      td.textContent = next ? "済" : "未";
+      await updateRecord(id, { schoolDoc: next });
+
+      // ボタンの表示とdata属性を即時反映
+      btn.dataset.status = next;
+      btn.textContent = next ? "済" : "未";
     });
   });
 
   // 削除ボタンのイベント
   document.querySelectorAll(".deleteBtn").forEach((btn) => {
     btn.addEventListener("click", async () => {
-      if (window.confirm("本当に削除しますか？")) {
-        await deleteRecord(btn.dataset.id);
-        await loadRecords(uid); // 削除後に再読み込み
-      }
+      if (!window.confirm("本当に削除しますか？")) return;
+
+      await deleteRecord(btn.dataset.id);
+      await loadRecords(uid); // 削除後に再読み込み
     });
   });
 };
