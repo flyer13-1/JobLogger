@@ -1,0 +1,137 @@
+/* ======================================================
+   companies.html 専用スタイル
+   main.css を読み込んだ上で、このページ固有の見た目を上書きする
+   （headerに「就活の軸」を乗せるためレイアウトを変更）
+====================================================== */
+
+/* headerをグリッドから縦並びに変更して、軸エリアを内包できるようにする */
+header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: left;
+}
+
+/* header上部：タイトルとナビ（記録ページ・ログアウト）を左右に配置 */
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.header-top h1 {
+  text-align: left;
+}
+
+/* ナビボタン類をまとめる */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ======================================================
+   就活の軸エリア（header内）
+====================================================== */
+#axisArea {
+  background: rgba(255, 255, 255, 0.12); /* 薄い白で軽くカード化 */
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+}
+
+#axisArea h2 {
+  font-family: "Zen Maru Gothic", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+
+.axis-note {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 14px;
+}
+
+/* 軸の入力フォーム：入力欄と追加ボタンを横並びに */
+#axisForm {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+#axisForm #axisInput {
+  flex: 1; /* 入力欄を伸ばす */
+}
+
+#axisForm button {
+  flex-shrink: 0; /* ボタンは縮めない */
+}
+
+/* 軸の一覧：チップ（タグ）状に並べる */
+#axisList {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.axis-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #fff;
+  color: var(--color-text);
+  padding: 8px 14px;
+  border-radius: 999px; /* 丸いチップ */
+  font-size: 0.9rem;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* チップ内の削除（×）ボタン */
+.axis-item .axisDeleteBtn {
+  padding: 0;
+  width: 22px;
+  height: 22px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 1rem;
+  background: var(--color-muted);
+  box-shadow: none;
+}
+
+.axis-item .axisDeleteBtn:hover {
+  background: #ef4444; /* ホバーで赤く */
+  transform: none;
+}
+
+.axis-empty {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.9rem;
+}
+
+/* ======================================================
+   企業一覧テーブル：このページは列が少ないので最小幅を緩める
+====================================================== */
+#companyView {
+  overflow-x: auto;
+}
+
+#companyView table {
+  min-width: 0;
+}
+
+/* 企業一覧内のリンク */
+#companyView a {
+  color: var(--color-primary);
+  font-weight: 700;
+}

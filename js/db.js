@@ -26,12 +26,12 @@ export const getRecords = async (colName, uid) => {
   }));
 };
 
-// データを削除（１行ずつ）
-export const deleteRecord = async (id) => {
-  await deleteDoc(doc(db, "records", id));
+// データを削除（１行ずつ） コレクション名は任意指定（既定はrecords）
+export const deleteRecord = async (id, colName = "records") => {
+  await deleteDoc(doc(db, colName, id));
 };
 
-// データ更新（指定フィールドのみ）
-export const updateRecord = async (id, data) => {
-  await updateDoc(doc(db, "records", id), data);
+// データ更新（指定フィールドのみ） コレクション名は任意指定（既定はrecords）
+export const updateRecord = async (id, data, colName = "records") => {
+  await updateDoc(doc(db, colName, id), data);
 };

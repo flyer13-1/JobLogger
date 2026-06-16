@@ -116,6 +116,33 @@ header h1 {
   justify-self: end;
 }
 
+/* ページ移動リンク（ログアウトと同じ白枠ボタン風） */
+.nav-link {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  letter-spacing: 0.03em;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-2px);
+}
+
+/* main.htmlのheader（3列グリッド）ではリンクを左端に寄せる */
+header > .nav-link {
+  justify-self: start;
+}
+
 /* ======================================================
    main（コンテンツエリア）
 ====================================================== */

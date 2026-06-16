@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet" href="css/companies.css" />
+    <script defer type="module" src="js/auth.js"></script>
+    <script defer type="module" src="js/companies.js"></script>
+    <title>気になる企業・就活の軸</title>
+  </head>
+  <body>
+    <header>
+      <div class="header-top">
+        <h1>気になる企業 &amp; 就活の軸</h1>
+        <div class="header-actions">
+          <a href="main.html" class="nav-link">記録ページへ</a>
+          <button id="logout">ログアウト</button>
+        </div>
+      </div>
+
+      <section id="axisArea">
+        <h2>就活の軸</h2>
+        <p class="axis-note">大切にしたい価値観を1つずつ追加しよう（複数登録できます）</p>
+        <form id="axisForm">
+          <input
+            type="text"
+            id="axisInput"
+            name="axisInput"
+            placeholder="例：成長できる環境がある"
+            required
+          />
+          <button type="submit">追加</button>
+        </form>
+        <ul id="axisList">
+          <!-- 就活の軸がここに表示される -->
+        </ul>
+      </section>
+    </header>
+
+    <main>
+      <article id="companyRegist">
+        <h2>気になる企業を登録</h2>
+        <p>企業名と企業のサイト（URLは任意）を入力</p>
+        <form id="companyForm">
+          <section>
+            <label for="companyName">企業名：</label>
+            <input type="text" id="companyName" name="companyName" required />
+          </section>
+
+          <section>
+            <label for="companyUrl">企業URL（任意）：</label>
+            <input
+              type="url"
+              id="companyUrl"
+              name="companyUrl"
+              placeholder="https://example.com"
+            />
+          </section>
+
+          <section>
+            <input type="submit" value="登録" />
+          </section>
+        </form>
+      </article>
+
+      <article id="companyView">
+        <h2>気になる企業一覧</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>企業名</th>
+              <th>サイト</th>
+              <th>削除操作</th>
+            </tr>
+          </thead>
+          <tbody id="companyTableBody">
+            <!-- 気になる企業がここに表示される -->
+          </tbody>
+        </table>
+      </article>
+    </main>
+  </body>
+</html>
