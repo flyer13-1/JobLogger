@@ -1,4 +1,4 @@
-import { getRecords, deleteRecord } from "./db.js";
+import { getRecords, deleteRecord, updateRecord } from "./db.js";
 
 // HTMLエスケープ（ユーザ入力をそのまま埋め込まない）
 const escapeHtml = (str = "") =>
@@ -50,8 +50,13 @@ export const loadAxes = async (uid) => {
 // 気になる企業の一覧表示
 export const loadCompanies = async (uid) => {
   const companies = await getRecords("companies", uid);
-  // 登録順で並べる
-  companies.sort((a, b) => (a.createdAt ?? 0) - (b.createdAt ?? 0));
+  // 順位の昇順で並べる（未設定は末尾、同順位は登録順）
+  companies.sort((a, b) => {
+    const rankA = a.rank ?? Infinity;
+    const rankB = b.rank ?? Infinity;
+    if (rankA !== rankB) return rankA - rankB;
+    return (a.createdAt ?? 0) - (b.createdAt ?? 0);
+  });
 
   const tbody = document.getElementById("companyTableBody");
   tbody.innerHTML = "";
@@ -64,11 +69,31 @@ export const loadCompanies = async (uid) => {
         : "none";
 
     tr.innerHTML = `
+      <td>
+        <input
+          type="number"
+          class="companyRankInput"
+          data-id="${c.id}"
+          value="${c.rank ?? ""}"
+          aria-label="順位"
+        />
+      </td>
       <td>${escapeHtml(c.name)}</td>
       <td>${urlCell}</td>
       <td><button class="companyDeleteBtn" data-id="${c.id}">削除</button></td>
     `;
     tbody.appendChild(tr);
+  });
+
+  // 順位の更新（入力後にフォーカスを外したタイミングで即保存・即並び替え）
+  document.querySelectorAll(".companyRankInput").forEach((input) => {
+    input.addEventListener("change", async () => {
+      const value = input.value.trim();
+      const rank = value === "" ? null : Number(value);
+
+      await updateRecord(input.dataset.id, { rank }, "companies");
+      await loadCompanies(uid); // 更新後に並び替えを反映
+    });
   });
 
   // 企業の削除
