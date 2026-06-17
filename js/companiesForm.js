@@ -34,6 +34,7 @@ export const initCompanyForm = (onSubmit) => {
 
       const name = document.getElementById("companyName").value.trim();
       const url = document.getElementById("companyUrl").value.trim();
+      const rankValue = document.getElementById("companyRank").value.trim();
       if (!name) {
         alert("企業名を入力してください。");
         return;
@@ -43,6 +44,7 @@ export const initCompanyForm = (onSubmit) => {
         uid: auth.currentUser.uid,
         name,
         url, // 任意（未入力なら空文字）
+        rank: rankValue === "" ? null : Number(rankValue), // 任意（未入力ならnull）
         createdAt: Date.now(),
       });
 
