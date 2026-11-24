@@ -206,10 +206,3 @@ button:active {
   border: none;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* GitHubボタン個別：濃いネイビー背景・白文字 */
-#loginGithub {
-  background: #1e293b;
-  color: #fff;
-  box-shadow: 0 4px 14px rgba(30, 41, 59, 0.25);
-}
